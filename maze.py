@@ -2,6 +2,14 @@
 import pygame
 import random
 
+def get_gradient_color(start_color, end_color, t):
+    """Trả về màu nằm giữa start_color và end_color theo tỷ lệ t (0..1)."""
+    return (
+        int(start_color[0] + (end_color[0] - start_color[0]) * t),
+        int(start_color[1] + (end_color[1] - start_color[1]) * t),
+        int(start_color[2] + (end_color[2] - start_color[2]) * t),
+    )
+
 class Cell:
     """Đại diện cho một ô trong lưới mê cung."""
     def __init__(self, x, y, cell_size):
@@ -107,12 +115,17 @@ class Maze:
             elif exit_col == 0 and self.exit_pos != self.entry_pos: cell_exit.walls['left'] = False
             else: cell_exit.walls['bottom'] = False
 
-    def draw(self, surface, wall_color, background_color, wall_thickness):
-        """Vẽ toàn bộ mê cung lên surface được cung cấp."""
+    def draw(self, surface, wall_color=None, background_color=(0, 0, 0), wall_thickness=2):
+    # """Vẽ toàn bộ mê cung với hiệu ứng màu gradient cho tường."""
         surface.fill(background_color)
         for row in self.grid:
             for cell in row:
-                cell.draw(surface, wall_color, wall_thickness)
+                # Tính t dựa vào vị trí cell.x để tạo gradient ngang
+                t = cell.x / (self.cols - 1) if self.cols > 1 else 0
+                # Màu từ xanh dương → đỏ
+                gradient_color = get_gradient_color((0, 0, 255), (255, 0, 0), t)
+                cell.draw(surface, gradient_color, wall_thickness)
+
 
     def get_cell(self, col, row):
          """Lấy đối tượng Cell tại tọa độ lưới (col, row)."""
