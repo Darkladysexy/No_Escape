@@ -1,4 +1,4 @@
-README - Huong Dan Chay Game No Escape & Xu Ly Antivirus.txt
+README - Huong Dan Chay Game No Escape & Xu Ly Antivirus
 ========================================================
 
 Cam on ban da tai game No Escape!
