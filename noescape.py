@@ -16,6 +16,9 @@ def start_level_1p(level, game_data):
     game_data['1p_goal_pos'] = game_data['maze'].exit_pos; game_data['start_time'] = pygame.time.get_ticks(); game_data['time_limit'] = time_limit; game_data['remaining_time'] = time_limit
     game_data['layout'] = {'cell_size': cell_size, 'offset_x': offset_x, 'offset_y': offset_y, 'surf_w': surf_w, 'surf_h': surf_h}
     new_maze_surface = pygame.Surface((surf_w, surf_h)); print(f"Bắt đầu 1P Level {level}")
+    new_maze_surface = pygame.Surface((surf_w, surf_h))
+    game_data['maze'].draw(new_maze_surface, wall_color=(255, 255, 255), background_color=(0, 0, 0), wall_thickness=2)
+
     return new_maze_surface, True
 
 # --- Hàm Khởi tạo Level VS Bot ---
@@ -30,6 +33,9 @@ def start_level_vs(level, game_data):
      game_data['bot_path'] = utils.find_path_bfs(game_data['maze'], game_data['bot_pos'], game_data['bot_goal_pos'])
      if game_data['bot_path'] is None: print(f"Lỗi VS Bot Level {level}: Không tìm đường!"); return None, False
      new_maze_surface = pygame.Surface((surf_w, surf_h)); print(f"Bắt đầu VS Bot Level {level}")
+     new_maze_surface = pygame.Surface((surf_w, surf_h))
+     game_data['maze'].draw(new_maze_surface, wall_color=(255, 255, 255), background_color=(0, 0, 0), wall_thickness=2)
+
      return new_maze_surface, True
 
 def run_game():

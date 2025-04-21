@@ -38,12 +38,25 @@ def handle_input_1p(event, game_data):
 
 def update_1p(game_data):
     """Cập nhật logic cho chế độ 1 Player (timer, win/lose)."""
-    player_col, player_row = game_data['player_pos']; goal_col, goal_row = game_data['1p_goal_pos']; start_time = game_data['start_time']; time_limit = game_data['time_limit']
-    new_game_state = game_data['game_state']; current_ticks = pygame.time.get_ticks(); elapsed_time = (current_ticks - start_time) / 1000; remaining_time = max(0, time_limit - elapsed_time)
+    player_col, player_row = game_data['player_pos']
+    goal_col, goal_row = game_data['1p_goal_pos']
+    start_time = game_data['start_time']
+    time_limit = game_data['time_limit']
+    
+    new_game_state = game_data['game_state']
+    current_ticks = pygame.time.get_ticks()
+    elapsed_time = (current_ticks - start_time) / 1000
+    remaining_time = max(0, time_limit - elapsed_time)
     game_data['remaining_time'] = remaining_time
-    if player_col == goal_col and player_row == goal_row: new_game_state = 'win_1p'
-    elif remaining_time <= 0: new_game_state = 'lose_1p'
+
+    if player_col == goal_col and player_row == goal_row:
+        new_game_state = 'win_1p'
+    elif remaining_time <= 0:
+        new_game_state = 'lose_1p'
+
+    game_data['game_state'] = new_game_state  # Cập nhật trạng thái vào game_data
     return new_game_state
+
 
 def draw_1p(screen, maze_surface, game_data, fonts):
     """Vẽ màn hình cho chế độ 1 Player."""
